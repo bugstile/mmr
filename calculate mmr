@@ -1,0 +1,55 @@
+//var players = [40, 60, 555, 343, 125, 616, 717, 666, 112, 525, 678, 982, 151, 55, 655, 234];
+var team1 = [];
+var team2 = [];
+var players = [];
+
+function randomIntFromInterval(min,max){
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+for(var i=0; i<16; i++){
+	players.push(randomIntFromInterval(0,2000));
+}
+
+randomIntFromInterval()
+
+players.sort(function(a,b){
+    return b - a
+})
+console.log('players mmr: ' + players);
+  
+players.forEach(function(element){
+
+  //Choose highest ranking player to a team randomly to begin knapsack
+  if(team1.length == 0 && team2.length == 0){
+    if(Math.random() >= 0.5){
+      team2.push(element)
+    } else {
+      team1.push(element);
+    }
+  } else {
+  
+  	if(team1.length == 8 || team2.length == 8){
+    	if(team1.length == 8){
+      	team2.push(element);
+      } else {
+      	team1.push(element);
+      }
+    } else {
+      if(team1.reduce((a, b) => a + b, 0) >= team2.reduce((a, b) => a + b, 0)){
+      	team2.push(element);
+      } else {
+        team1.push(element);
+      }
+    }
+  }
+})
+
+console.log('team1 total mmr: ' + team1.reduce((a, b) => a + b, 0))
+console.log('team1 players: '+ team1);
+console.log('team2 total mmr: ' + team2.reduce((a, b) => a + b, 0))
+console.log('team2 players: '+ team2);
+
+
+
+
